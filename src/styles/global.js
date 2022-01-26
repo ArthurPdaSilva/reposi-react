@@ -8,11 +8,9 @@ export default createGlobalStyle`
         box-sizing: border-box;
     }
 
-    html, body, #root{
-        width: 100%;
-    }
-
     body{
+        min-height: 100vh;
+        width: 100%;
         background-color: #0D2636;
         -webkit-font-smoothing: antialiased !important;
     }
