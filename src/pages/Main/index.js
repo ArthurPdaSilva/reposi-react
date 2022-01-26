@@ -1,9 +1,10 @@
 import React from 'react';
+import {Title} from './styles';
 
 export default function Main() {
  return (
    <div>
-       <h1>Main file</h1>
+       <Title>Main file</Title>
    </div>
  );
 }
