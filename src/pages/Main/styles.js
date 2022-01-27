@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes, css} from 'styled-components';
 
 export const Container = styled.div`
     margin: 80px auto;
@@ -34,7 +34,21 @@ export const Form = styled.form`
     }
 `;
 
-export const SubmitButton= styled.button`
+//Criando animação do botão
+const animate = keyframes`
+    from{
+        transform: rotate(0deg);
+    }
+
+    to{
+        transform: rotate(360deg);
+    }
+`;
+
+export const SubmitButton= styled.button.attrs(props => ({
+    type: 'submit',
+    disabled: props.loading,
+}))`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,4 +57,19 @@ export const SubmitButton= styled.button`
     border-radius: 4px;
     margin-left: 10px;
     padding: 0 15px;
+
+    //Acessando propriedade, quando ele tiver com essa propriedade, faça o botão ficar...
+    &[disabled]{
+        cursor: not-allowed;
+        opacity: .5;
+    }
+
+    ${props => props.loading && 
+    css`
+        svg{
+            animation: ${animate} 2s linear infinite;
+        }
+    `}
+
+
 `;
