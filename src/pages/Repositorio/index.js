@@ -1,17 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import { Container } from './styles';
+import { Container, Owner, Loading, BackButton } from './styles';
+import { FaArrowLeft } from 'react-icons/fa';
 import api from '../../services/api';
 
 export default function Repositorio() {
   const { repositorio } = useParams();
-  const [uniRepo, setUniRepo] = useState({});
+  const [uniRepo, setUniRepo] = useState();
   const [issues, setIssues] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load(){
-      //Ao invés de fazer duas requisições em tempos diferentes, eu posso fazer ao mesmo tempo
+      // Ao invés de fazer duas requisições em tempos diferentes, eu posso fazer ao mesmo tempo
       const [repositorioData, issuesData] = await Promise.all([
         api.get(`/repos/${repositorio}`),
         api.get(`/repos/${repositorio}/issues`, {
@@ -22,17 +23,37 @@ export default function Repositorio() {
           }
         })
       ]);
-
-      setUniRepo(repositorioData.data);
-      setIssues(issuesData.data);
-      setLoading(false);
+        
+        setUniRepo(repositorioData.data);
+        setIssues(issuesData.data);
+        setLoading(false);
     }
 
     load()
   }, [repositorio])
+
+  if(loading){
+    return(
+      <Loading>
+        <h1>Carregando repositório...</h1>  
+      </Loading>
+      
+    )
+  }
+
   return (
     <Container>
-        <h1 style={{color: "#FFF"}}>Repositório: {repositorio}</h1>
+      <BackButton to="/">
+        <FaArrowLeft color="#000" size={35}/>
+      </BackButton>
+
+      <Owner>
+        <img src={uniRepo.owner.avatar_url} alt={uniRepo.owner.login} />
+        <h1>{uniRepo.name}</h1>
+        <p>
+          {uniRepo.description}
+        </p>
+      </Owner>
     </Container>
   );
 }
