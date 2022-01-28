@@ -117,7 +117,7 @@ export const PageAction = styled.div`
     button{
         outline: 0;
         border: 0;
-        background: #222;
+        background-color: #222;
         color: #FFF;
         padding: 5px 10px;
         border-radius: 4px;
@@ -125,6 +125,23 @@ export const PageAction = styled.div`
         &:disabled{
             cursor: not-allowed;
             opacity: .5;
+        }
+    }
+`;
+
+export const FilterList = styled.div`
+    margin: 15px 0;
+
+    button{
+        outline: 0;
+        border: 0;
+        padding: 8px;
+        border-radius: 4px;
+        margin: 0 3px;
+
+        &:nth-child(${props => props.active + 1}){
+            background-color: #0071db;
+            color: #FFF;
         }
     }
 `;
